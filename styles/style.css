@@ -1,0 +1,758 @@
+:root {
+
+    /* Base Colors */
+    --color-white: hsl(0, 0%, 100%);
+    --color-black: hsl(0, 0%, 4%);
+    --color-gray: hsl(0, 0%, 67%);
+    --color-light-gray: hsl(0, 12%, 93%);
+    --color-dark-gray: hsl(0, 1%, 26%);
+    --color-blue: hsl(216, 78%, 57%);
+    
+    /* Semantic Colors */
+    --color-success: hsl(145, 63%, 42%);
+    --color-error: hsl(0, 63%, 42%);
+    
+    /* Theme Colors */
+    --background-color: var(--color-white);
+    --primary-text-color: var(--color-black);
+    --secondary-text-color: var(--color-gray);
+    --primary-button-color: var(--color-black);
+    --secondary-button-color: var(--color-gray);
+    --neutral-color: var(--color-light-gray);
+    --achievement-color: var(--color-blue);
+    --logo-color: var(--color-blue);
+    --secondary-color: var(--color-gray);
+    --primary-color: var(--color-black);
+    --correct-answer-color: var(--color-success);
+
+}
+
+/* Modern CSS Reset */
+*,
+*::before,
+*::after {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+/* Remove default margin */
+body,
+h1,
+h2,
+h3,
+h4,
+p,
+figure,
+blockquote,
+dl,
+dd {
+    margin: 0;
+}
+
+/* Set core root defaults */
+html:focus-within {
+    scroll-behavior: smooth;
+    overflow-x: hidden;
+}
+
+/* Set core body defaults */
+body {
+    min-height: 100vh;
+    width: 100%;
+    text-rendering: optimizeSpeed;
+    line-height: 1.5;
+    font-family: 'Inter', sans-serif;
+    overflow-x: hidden;
+}
+
+/* Make images easier to work with */
+img,
+picture {
+    max-width: 100%;
+    display: block;
+}
+
+/* Inherit fonts for inputs and buttons */
+input,
+button,
+textarea,
+select {
+    font: inherit;
+}
+
+a {
+    text-decoration: none;
+    color: var(--primary-text-color);
+}
+
+
+
+/* Remove all animations, transitions and smooth scroll for people that prefer not to see them */
+@media (prefers-reduced-motion: reduce) {
+    html:focus-within {
+        scroll-behavior: auto;
+    }
+
+    *,
+    *::before,
+    *::after {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.01ms !important;
+        scroll-behavior: auto !important;
+    }
+}
+
+.button{
+    padding: 7px 15px;
+    border-radius: 25px;
+    border: none;
+    font-size: 1.2rem;
+    font-weight: 500;
+    cursor: pointer;
+}
+
+header {
+    background-color: rgba(255, 255, 255, 0.863);
+    backdrop-filter: blur(5px);
+    height: 60px;
+    margin: 20px 20px;
+    border-radius: 10px;
+    position: sticky;
+    top: 20px;
+    z-index: 1000;
+}
+
+nav {
+    height: 100%;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-self: center;
+    width: 100%;
+
+    /* max-width: 1200px; */
+    padding: 0 20px;
+}
+
+
+.logo-part{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    
+}
+.logo h1 {
+    font-size: 2rem;
+    /* 32px */
+    line-height: 1
+}
+
+.logo h1>span {
+    color: var(--logo-color);
+}
+
+.menu{
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    gap: 30px;
+    padding-left: 30px;
+}
+
+.menu ul {
+    list-style: none;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    gap: 15px;
+   
+}
+.menu  ul li a {
+    font-size: 1rem;
+    /* 16px */
+    font-weight: 500;
+    color: var(--primary-text-color);
+}
+
+
+.login-signup {
+    display: flex;
+    flex-direction: row;
+    justify-content: right;
+    align-items: center;
+    gap: 10px;
+}
+
+.login-signup button {
+    padding: 2px 15px;
+    border-radius: 25px;
+    border: none;
+    font-size: 1rem;
+    /* 16px */
+    font-weight: 500;
+    cursor: pointer;
+}
+
+.login-signup .login-signup-button {
+    background-color: var(--secondary-button-color);
+    color: var(--primary-text-color);
+    transition: all 0.3s ease-in-out;
+}
+.login-signup .login-signup-button:hover {
+    background-color: var(--primary-button-color);
+    color: var(--neutral-color);
+}
+
+
+.login-signup .get-started-button {
+    transition: all 0.3s ease-in-out;
+    background-color: var(--primary-button-color);
+    color: var(--neutral-color);
+}
+.login-signup .get-started-button:hover {
+    background-color: var(--secondary-button-color);
+    color: var(--primary-text-color);
+}
+
+main {
+    width: 100%;
+    overflow-x: hidden;
+    position: relative;
+    min-height: 100vh;
+}
+
+.container {
+    height: 200vh;
+    width: 100%;
+    position: relative;
+}
+
+
+#hero-section {
+    height: 200vh;
+    position: relative;
+}
+
+#hero-section .hero-section-content {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    text-align: center;
+    color:var(--neutral-color);
+}
+
+#hero-section .hero-section-content h1 {
+    font-size: clamp(2rem, -0.615rem + 4.923vw, 4rem);
+    font-weight: 600;
+    text-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+}
+
+#hero-section .hero-section-content p {
+    font-size: clamp(1rem, 0.738rem + 0.492vw, 1.2rem);
+    font-weight: 400;
+    color: var(--primary-text-color);
+    text-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+}
+
+.take-now-button {
+    background-color: var(--primary-button-color);
+    color: var(--neutral-color);
+    margin-top: 20px;
+}
+
+.take-now-button:hover {
+    background-color: var(--secondary-button-color);
+    color: var(--primary-text-color);
+}
+
+section:not(.container){
+    margin: 60px 40px;
+}
+
+/* General Section Styling */
+.how-it-works {
+    position: relative;
+    z-index: 0;
+    font-family: 'Arial', sans-serif;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    max-width: 800px;
+    display: flex;
+    flex-direction: column;
+    justify-self: center;
+
+    margin: 20px auto;
+}
+
+/* Heading Styles */
+.how-it-works h2 {
+    text-align: center;
+}
+
+/* Step Styling */
+.how-it-works .step {
+    margin-bottom: 20px;
+    border-left: 5px solid var(--color-blue);
+    padding-left: 15px;
+    overflow: hidden;
+}
+
+.how-it-works .step h3 {
+    font-size: 1.5rem;
+    color: var(--color-blue);
+    margin-bottom: 5px;
+}
+
+.how-it-works .step p {
+    font-size: 1rem;
+    color: var(--color-gray);
+    line-height: 1.6;
+}
+
+.quiz-option {
+    position: relative;
+    z-index: 0;
+    margin: 20px 40px;
+}
+
+.quiz-option h2 {
+    font-size: 2rem;
+    font-weight: 600;
+    margin-bottom: 20px;
+}
+
+.quiz-option-content {
+
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    /* background-color: red; */
+    gap: 30px;
+}
+
+.quiz-option-card {
+    height: 100%;
+    /* background-color: #007bff; */
+    display: grid;
+    grid-template-rows: auto auto 32px auto;
+    gap: 10px;
+    padding: 20px;
+}
+
+i {
+    width: 50px;
+    font-size: 1.25rem;
+    /* 20px */
+    color: var(--neutral-color);
+    background-color: var(--primary-color);
+    border-radius: 50%;
+    padding: 10px;
+    text-align: center;
+}
+
+.card-title {
+    font-size: 1.5rem;
+    /* 24px */
+    font-weight: 600;
+}
+
+.subtext{
+    font-size: 1rem;
+    font-weight: 400;
+    line-height: 1;
+    color: var(--secondary-text-color);
+}
+
+.card-button {
+    width: 100px;
+    background-color: var(--primary-button-color);
+    color: var(--neutral-color);
+    transition: all 0.3s ease-in-out;
+}
+
+.card-button:hover{
+    background-color: var(--secondary-button-color);
+    color: var(--primary-text-color);
+}
+
+.quiz-section{
+    position: relative;
+    z-index: 0;
+}
+
+.section-heading{
+    font-size: 2rem;
+    font-weight: 600;
+    margin-bottom: 20px;
+    /* text-align: center; */
+}
+
+
+.quiz-section h2{
+    text-align: center;
+}
+
+.quiz-section-container{
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    max-width: 800px;
+    margin: 20px auto;
+    display: grid;
+    grid-template-rows: 40px auto;
+    gap: 20px;
+}
+
+.quiz-section-header{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    overflow: hidden;
+}
+
+.quiz-section-header h4{
+    font-size: 1.25rem;
+    font-weight: 400;
+    background-color: var(--secondary-color);
+    border-radius: 25px;
+    padding: 5px 10px;
+}
+
+.quiz-section-content{
+    display: grid;
+    grid-template-rows: repeat(auto);
+    gap: 20px;
+
+}
+
+.quiz-deatil .quiz{
+    font-size: 1.5rem;
+    font-weight: 600;
+}
+
+.quiz-deatil .quiz-deatil{
+    font-size: 1rem;
+    color: var(--secondary-text-color);
+}
+
+.quiz-answer{
+    display:flex;
+    flex-direction: column;
+    gap:10px;
+}
+
+.quiz-answer .quiz-option-button{
+    background-color: var(--secondary-color);
+    transition: all 0.3s ease-in-out;
+}
+
+.quiz-answer .quiz-option-button:hover{
+    background-color: var(--primary-button-color);
+    color: var(--neutral-color);
+}
+
+.skip-next-button{
+    display: flex;
+    flex-direction: row;
+    justify-content: right;
+    align-items: center;
+    gap: 10px;
+    overflow: hidden;
+}
+
+.skip-next-button .skip-button{
+    background-color: var(--primary-button-color);
+    color: var(--neutral-color);
+}
+
+
+.skip-next-button .next-button{
+    background-color: var(--primary-button-color);
+    color: var(--neutral-color);
+}   
+
+
+
+
+.feedback .feedback-text{
+    opacity: 0;
+    color: var(--correct-answer-color);
+}
+
+.result{
+    position: relative;
+    z-index: 0;
+}
+
+.result-content{
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+    gap: 30px;
+}
+
+.result-card{
+    padding: 20px;
+    gap: 10px;
+    height: 180px;
+    display: grid;
+    grid-template-rows: 50px 1fr 1fr;
+}
+.achievement-feedback .achievement-feedback-text{
+    opacity: 0;
+    text-align: center;
+    color: var(--achievement-color);
+}
+
+.utility-buttons{
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    gap: 10px;
+}
+.utility-buttons .retake-button{
+    background-color: var(--primary-button-color);
+    color: var(--neutral-color);
+    align-items: center;
+    transition: all 0.3s ease-in-out;
+}
+
+.utility-buttons .retake-button:hover{
+    background-color: var(--color-blue);
+    color: var(--primary-text-color);
+}
+
+.utility-buttons .share-button{
+    background-color: var(--secondary-button-color);
+    align-items: center;
+    transition: all 0.3s ease-in-out;
+}
+
+.utility-buttons .share-button:hover{
+    background-color: var(--color-blue);
+    color: var(--primary-text-color);
+}
+
+
+
+  
+  /* General Footer Styling */
+  footer {
+    position: relative;
+    background-color: var(--primary-color);
+    color: var(--background-color);
+    padding: 20px;
+  }
+  
+  footer .section-heading {
+    font-size: 1.8rem;
+    margin: 0 50px 10px 100px;
+    color: var(--logo-color);
+    text-align: center;
+  }
+  
+  .footer-content {
+    display: flex;
+    justify-content: space-around;
+    flex-wrap: wrap;
+    gap: 20px;
+  }
+  
+  .footer-content div {
+    max-width: 300px;
+    text-align: left;
+  }
+  
+  .footer-content h3 {
+    font-size: 1.2rem;
+    margin-bottom: 10px;
+    color: var(--achievement-color);
+  }
+  
+  .footer-content p {
+    font-size: 0.9rem;
+    line-height: 1.5;
+    color: var(--secondary-text-color);
+  }
+
+  .social-links{
+    margin-right: 30px;
+  }
+
+  .social-links h3{
+    text-align: left;
+  }
+  
+  .social-links ul {
+    list-style: none;
+    padding: 0;
+    display: flex;
+    flex-direction: row;
+    gap: 10px;
+  }
+  
+  .social-links ul li {
+    display: inline;
+  }
+  
+  .social-links a {
+    text-decoration: none;
+    color: var(--color-blue);
+    transition: all 0.3s ease-in-out;
+  }
+
+  .social-links a:hover{
+    color: var(--color-success);
+  }
+
+  .newsletter h3{
+    text-align: left;
+  }
+  
+  .newsletter form {
+    display: flex;
+    flex-direction: column;
+  }
+  
+  .newsletter input {
+    padding: 8px;
+    margin-bottom: 10px;
+    border: 1px solid var(--secondary-color);
+    border-radius: 5px;
+  }
+  
+  .newsletter button {
+    padding: 8px;
+    background-color: var(--neutral-color);
+    color: var(--primary-color);
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: all 0.3s ease-in-out;
+  }
+  
+  .newsletter button:hover {
+    background-color: var(--color-blue);
+    color: var(--primary-text-color);
+  }
+  
+  .footer-bottom {
+    margin-top: 20px;
+    font-size: 0.8rem;
+    color: var(--neutral-color);
+  }
+
+
+  @media (max-width: 768px) {
+
+    header{
+        margin: 0;
+        padding: 0;
+        width: 100%;
+        top: 0;
+        z-index: 1000;
+    }
+
+    nav{
+        width: 100%;
+        display: block;
+        padding: 5px 20px;
+
+    }
+
+    .logo-part{
+        display: flex;
+        flex-direction: row;
+        justify-content: space-between;
+        align-items: center;
+    }
+
+    .logo-part i{
+        display: block;
+    }
+
+    .menu{
+        transform: translateX(100%);
+        position: absolute;
+        height: 100vh;
+        width: 100%;
+        background-color: rgba(255, 255, 255, 0.775);
+        backdrop-filter: blur(10px);
+        padding: 0px;
+        margin: 0;  
+        top: 0; 
+        left: 0;
+        z-index: 1000;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+    }
+
+    .menu ul {
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .menu i{
+        display: block;
+        position: absolute;
+        top: 20px;
+        right: 20px;
+        cursor: pointer;
+        z-index: 1001;
+    }
+
+    .menu ul li a{
+        font-size: 1.25rem; /* 20px */
+    }
+
+    .login-signup{
+        flex-direction: column;
+        gap: 10px;
+    }
+
+    #hero-section{
+        width: 100%;
+    }
+
+    #hero-section .hero-section-content h1 {
+        min-width: 300px;
+        font-size: clamp(1.25rem, 0.977rem + 1.455vw, 1.75rem);
+        letter-spacing: -1px;
+    }
+
+    #hero-section .hero-section-content p {
+        font-size: 1rem;
+        font-weight: 300;
+        min-width: 300px;
+    }
+
+    .section-heading{
+        font-size: 1.55rem;
+        font-weight: 600;
+    }
+
+    .how-it-works{
+        margin : 0;
+        padding: 0;
+       box-shadow: none;
+    }
+
+    .how-it-works .step h2{
+        font-size: 1.25rem;
+    }
+    .how-it-works .step p{
+        font-size: 1rem;
+    }
+
+
+   
+  }
+  
