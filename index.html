@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="./styles/style.css">
+    <link rel="stylesheet" href="./styles/utility-classes.css">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/locomotive-scroll@3.5.4/dist/locomotive-scroll.css">
     <link
     href="https://cdn.jsdelivr.net/npm/remixicon@4.5.0/fonts/remixicon.css"
@@ -119,10 +120,10 @@
             <h2 class="section-heading">Quiz</h2>
             <div class="quiz-section-container">
                 <div class="quiz-section-header">
-                    <h4 class="correct-answers"><span class="correct-answers-count">0</span>/20</h4>
-                    <h4 class="quiz-number"><span class="question-number-count">0</span>/20</h4>
+                    <h4 class="correct-answers"><span class="correct-answers-count">0</span>/<span class="total-questions"></span></h4>
+                    <h4 class="quiz-number"><span class="question-number-count">0</span>/<span class="total-questions"></span></h4>
                     <h4 class="quiz-category"><span class="quiz-category-name">Category</span></h4>
-                    <h4 class="played-answers"><span class="played-answers-count">0</span>/20</h4>
+                    <h4 class="wrong-answers"><span class="wrong-answers-count">0</span>/<span class="total-questions"></span></h4>
                 </div>
                 <div class="quiz-section-content">
                     <div class="quiz-deatil">
@@ -130,17 +131,19 @@
                         <p class="quiz-deatil">Choose the correct answer below.</p>
                     </div>
                     <div class="quiz-answer">
-                        <button class="quiz-option-button button">Option 1</button>
-                        <button class="quiz-option-button button">Option 2</button>
-                        <button class="quiz-option-button button">Option 3</button>
-                        <button class="quiz-option-button button">Option 4</button>
+                        <button class="quiz-option-button button" data-option>Option 1</button>
+                        <button class="quiz-option-button button" data-option>Option 2</button>
+                        <button class="quiz-option-button button" data-option>Option 3</button>
+                        <button class="quiz-option-button button" data-option>Option 4</button>
                     </div>
-                    <div class="skip-next-button">
+                    <div class="feedback-buttons">
+                      <div class="feedback">
+                          <!-- <p class="feedback-text">Correct answer:<span class="fact">Fact</span></p> -->
+                      </div>
+                      <div class="skip-next-button">
                         <button class="skip-button button">Skip</button>
                         <button class="next-button button">Next</button>
                     </div>
-                    <div class="feedback">
-                        <p class="feedback-text">Correct answer:<span class="fact">Fact</span></p>
                     </div>
                 </div>
             </div>
@@ -181,7 +184,11 @@
             <button class="button retake-button">Retake Quiz</button>
             <button class="button share-button">Share</button>
           </section>
+          <section id="error-message" class="error-message hidden">
+            <p class="error-message-text">Error Message</p>
+          </section>
         </main>
+
         <footer>
             <h2 class="section-heading">Stay Connected</h2>
             <div class="footer-content">
@@ -215,6 +222,8 @@
     <script src="https://cdn.jsdelivr.net/npm/locomotive-scroll@3.5.4/dist/locomotive-scroll.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.13.0/gsap.min.js" integrity="sha512-NcZdtrT77bJr4STcmsGAESr06BYGE8woZdSdEgqnpyqac7sugNO+Tr4bGwGF3MsnEkGKhU2KL2xh6Ec+BqsaHA==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.13.0/ScrollTrigger.min.js" integrity="sha512-P2IDYZfqSwjcSjX0BKeNhwRUH8zRPGlgcWl5n6gBLzdi4Y5/0O4zaXrtO4K9TZK6Hn1BenYpKowuCavNandERg==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
-    <script src="./scripts/script.js"></script>
+    
+    <script src="./scripts/animations.js" type="module"></script>
+    <script src="./scripts/quizApp.js" type="module"></script>
 </body>
 </html>
