@@ -64,6 +64,7 @@ body {
     line-height: 1.5;
     font-family: 'Inter', sans-serif;
     overflow-x: hidden;
+    /* background-color: black;  Remove later */
 }
 
 /* Make images easier to work with */
@@ -421,9 +422,26 @@ i {
 .quiz-section-header h4{
     font-size: 1.25rem;
     font-weight: 400;
-    background-color: var(--secondary-color);
     border-radius: 25px;
     padding: 5px 10px;
+}
+
+.quiz-section-header .correct-answers{
+    background-color: var(--correct-answer-color);
+}
+
+.quiz-section-header .quiz-number{
+    background-color: var(--primary-button-color);
+    color: var(--neutral-color);
+}   
+
+.quiz-section-header .quiz-category{
+    background-color: var(--secondary-color);
+}
+
+.quiz-section-header .wrong-answers{
+    background-color: var(--color-error);
+    color: var(--neutral-color);
 }
 
 .quiz-section-content{
@@ -436,6 +454,11 @@ i {
 .quiz-deatil .quiz{
     font-size: 1.5rem;
     font-weight: 600;
+    overflow: hidden;
+}
+
+.quiz-deatil .quiz span{
+    display: inline-block;
 }
 
 .quiz-deatil .quiz-deatil{
@@ -479,12 +502,20 @@ i {
     color: var(--neutral-color);
 }   
 
+.feedback-buttons{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+}
+.feedback-text{
+    font-size: 1rem;
+    font-weight: 600;
+}
 
-
-
-.feedback .feedback-text{
-    opacity: 0;
-    color: var(--correct-answer-color);
+ .feedback-text .fact{
+    font-size: 1rem;
+    font-weight: 400;
 }
 
 .result{
@@ -541,6 +572,21 @@ i {
 }
 
 
+.error-message{
+    position: fixed;
+    z-index: 1000;
+    bottom: 5%;
+    right: 2%;
+    background-color: var(--color-error);
+    padding: 10px 20px;
+    border-radius: 5px;
+    color: white;
+}
+
+.error-message-text{
+    font-size: 1rem;
+    font-weight: 400;
+}
 
   
   /* General Footer Styling */
@@ -658,13 +704,13 @@ i {
         width: 100%;
         top: 0;
         z-index: 1000;
+        overflow-x: hidden;
     }
 
     nav{
         width: 100%;
         display: block;
         padding: 5px 20px;
-
     }
 
     .logo-part{
@@ -679,7 +725,7 @@ i {
     }
 
     .menu{
-        transform: translateX(100%);
+        /* transform: translateX(100%); */
         position: absolute;
         height: 100vh;
         width: 100%;
@@ -688,7 +734,7 @@ i {
         padding: 0px;
         margin: 0;  
         top: 0; 
-        left: 0;
+        left: -100%;
         z-index: 1000;
         flex-direction: column;
         justify-content: center;
@@ -732,6 +778,7 @@ i {
         font-size: 1rem;
         font-weight: 300;
         min-width: 300px;
+        line-height: 1;
     }
 
     .section-heading{
