@@ -1,0 +1,50 @@
+
+
+.quiz-answer .quiz-option-button.correct-answer{
+    background-color: green;
+    color: white;
+    pointer-events: none;
+}
+
+.correct-answer:hover{
+    background-color: green;
+    color: white;
+    pointer-events: none;
+}
+
+
+.quiz-answer .quiz-option-button.wrong-answer{
+    background-color: red;
+    color: white;
+    pointer-events: none;
+}
+
+.wrong-answer:hover{
+    background-color: red;
+    color: white;
+    pointer-events: none;
+}
+
+
+.fact.success{
+    color: var(--color-success);
+}   
+
+.fact.info{
+    color: var(--color-blue);
+}
+
+.fact.error{
+    color: var(--color-error);
+}
+
+.hidden{
+    transform: translateX(200%);
+    transition: transform 0.3s ease-in-out;
+}
+
+
+
+
+
+
