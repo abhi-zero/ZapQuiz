@@ -39,9 +39,9 @@
               <i class="ri-close-circle-fill" hidden></i>
                 <ul>
                     <li><a href="#">Home</a></li>
-                    <li><a href="#">Categories</a></li>
-                    <li><a href="#">How it works</a></li>
-                    <li><a href="#">Contact</a></li>
+                    <li><a href="#quiz-option">Categories</a></li>
+                    <li><a href="#how-it-works">How it works</a></li>
+                    <li><a href="#footer">Contact</a></li>
                 </ul>
                 <div class="login-signup">
                     <button class="login-signup-button">Login/Signup</button>
@@ -60,7 +60,7 @@
               <p class="description">
                   Take quizzes, earn badges, and climb the leaderboard. Start your journey now!
               </p>
-              <button class="take-now-button button">Take Now</button>
+              <button id="toQuizSection" class="take-now-button button">Take Now</button>
           </div>
       </div>
      </section>
@@ -157,7 +157,7 @@
                     <div class="skip-next-button">
                       <button class="skip-button button">Skip</button>
                       <button class="next-button button">Next</button>
-                  </div>
+                    </div>
                   </div>
               </div>
           </div>
@@ -170,22 +170,22 @@
               <div class="result-card">
                   <i class="ri-checkbox-circle-line"></i>
                   <h3 class="card-title">Correct Answers</h3>
-                  <p id="total-correct-answers" class="subtext">8</p>
+                  <p id="total-correct-answers" class="subtext">0</p>
               </div>
               <div class="result-card">
                   <i class="ri-close-circle-line"></i>
                   <h3 class="card-title">Incorrect Answers</h3>
-                  <p id="total-correct-answers" class="subtext">8</p>
+                  <p id="total-wrong-answers" class="subtext">0</p>
               </div>
               <div class="result-card">
                   <i class="ri-subtract-line"></i>
                   <h3 class="card-title">Skipped</h3>
-                  <p id="total-correct-answers" class="subtext">8</p>
+                  <p id="total-skipped-answers" class="subtext">0</p>
               </div>
               <div class="result-card">
                   <i class="ri-trophy-line"></i>
                   <h3 class="card-title">Badges Unlocked</h3>
-                  <p id="total-correct-answers" class="subtext">Quiz Streak, Fast Thinker</p>
+                  <p id="total-correct-answers" class="subtext">Quiz Streak, Fast Thinker(Not available yet)</p>
               </div>
 
           </div>
@@ -197,6 +197,7 @@
         <section class="utility-buttons">
           <button class="button retake-button">Retake Quiz</button>
           <button class="button share-button">Share</button>
+          <button class="button reset-button" title="Reset your stats and start over">Reset</button>
         </section>
         <section id="error-message" class="error-message hidden">
           <p class="error-message-text">Error Message</p>
@@ -290,7 +291,7 @@
         </div>
       </dialog>
 
-      <footer>
+      <footer id="footer">
           <h2 class="section-heading">Stay Connected</h2>
           <div class="footer-content">
             <div class="about">
