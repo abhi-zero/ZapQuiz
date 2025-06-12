@@ -125,3 +125,9 @@ dialog .dialog-content form{
 
 
 
+
+@media (max-width: 500px) {
+    dialog{
+       min-width: 300px;
+    }
+}
