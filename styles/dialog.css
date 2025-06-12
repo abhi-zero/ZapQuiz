@@ -1,0 +1,127 @@
+
+
+dialog{
+    background-color: var(--primary-color);
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    border-radius: 10px;
+    box-shadow: 0 0 10px 0 rgba(0, 0, 0, 0.1);
+    border: none;
+    min-width: 400px;
+}
+
+dialog::backdrop{
+    background-color: rgba(0, 0, 0, 0.745);
+    backdrop-filter: blur(10px);
+    z-index: 4999;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+}
+
+dialog[open]{
+    display: block;
+    z-index: 5000;
+    position: fixed;
+}
+
+.dialog-content{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 20px;
+    padding: 20px;
+}
+
+dialog .dialog-content h2{
+    color: var(--neutral-color);
+    border-bottom: 1px solid var(--neutral-color);
+}
+
+dialog .dialog-content form{
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    grid-template-rows: 1fr 1fr 1fr 1fr;
+    gap: 10px;
+    color: var(--neutral-color);
+}
+
+dialog .dialog-content .categories{
+    display: grid;
+    grid-template-columns: 1fr;
+    grid-template-rows: 1fr;
+    gap: 10px;
+    color: var(--neutral-color);
+    width: 100%;
+}
+
+
+dialog .dialog-content label{
+    font-size: 1.1rem;
+    font-weight: 500;
+    color: var(--neutral-color);
+}
+
+dialog .dialog-content  select{
+    background-color: var(--secondary-color);
+    color: var(--primary-color);
+    border: none;
+    border-radius: 5px;
+    padding: 5px;
+    font-size: 1.1rem;
+    font-weight: 500;
+}
+
+dialog .dialog-content form button{
+    background-color: var(--secondary-color);
+    border: none;
+    width: 100%;   
+    border-radius: 5px;
+    padding: 5px;
+    font-size: 1rem;
+    font-weight: 600;
+    color: var(--primary-color);
+    transition: all 0.3s ease-in-out;
+    cursor: pointer;
+}
+
+dialog .dialog-content form .submit-button{
+    grid-column: 1 / -1;
+}
+
+dialog .dialog-content form .close-button{
+    grid-column: 1 / -1;
+}
+
+
+dialog .dialog-content form button:hover{
+    background-color: var(--neutral-color);
+}
+
+
+
+dialog .dialog-content .coming-soon-content{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    color: var(--secondary-color);
+    font-size: 1.1rem;
+    font-weight: 500;
+    text-align: center;
+}
+
+dialog .dialog-content form{
+    display:grid;
+    grid-template-columns: 1fr;
+    grid-template-rows: 1fr;
+    gap: 10px;
+    width: 100%;
+}
+
+
+
