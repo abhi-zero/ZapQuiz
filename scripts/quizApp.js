@@ -1,9 +1,10 @@
 import { animateText } from "./animations.js";
 
+// State and Configuration
 export const quizState = {
-  selectedCategory:"",
-  level:"easy",
-  amount:15,
+  selectedCategory: "",
+  level: "easy",
+  amount: 15,
   currentQuestionIndex: 0,
   score: 0,
   wrongAnswers: 0,
@@ -49,16 +50,43 @@ const stats = {
     "4": "Expert, Quick thinker",
     "5": "Master, Quizz master",
   }
-}
+};
 
-function getCategoryId(categoryName){
- 
+// Utility Functions
+function getCategoryId(categoryName) {
   return categories[categoryName];
-  
 }
 
+function shuffleAnswers(answers) {
+  return answers.sort(() => Math.random() - 0.5);
+}
 
+function breakText(textString) {
+  let splittedText = textString.split(" ");
+  let halfValue = Math.floor(splittedText.length / 2);
+  let clutter = "";
+  splittedText.forEach((word, idx) => {
+    clutter += `<span class="word">${word}</span> `;
+  });
+  return clutter;
+}
 
+// Question Processing Functions
+function processQuestions(questions) {
+  questions = questions.map((question) => {
+    const answers = [...question.incorrect_answers, question.correct_answer];
+    const shuffledAnswers = shuffleAnswers(answers);
+    return {
+      question: question.question,
+      answers: shuffledAnswers,
+      correctAnswer: question.correct_answer,
+      category: question.category,
+    };
+  });
+  return questions;
+}
+
+// API Functions
 async function fetchQuestions(amount = 10, level = "easy", category = 0) {
   const url = `https://opentdb.com/api.php?amount=${amount}&category=${category}&difficulty=${level}&type=multiple`;
   try {
@@ -86,40 +114,24 @@ async function fetchQuestions(amount = 10, level = "easy", category = 0) {
   }
 }
 
-
-function fetchQuestionsUsingCategory(totalQuestions, difficulty, category){
+function fetchQuestionsUsingCategory(totalQuestions, difficulty, category) {
   const categoryId = getCategoryId(category);
-   fetchQuestions(totalQuestions, difficulty, categoryId);
+  fetchQuestions(totalQuestions, difficulty, categoryId);
 }
 
-function fetchQuestionsUsingCard(){ 
- const totalQuestions = document.querySelectorAll("dialog select[name='total-questions']");
- const difficulty = document.querySelectorAll("dialog select[name='difficulty']");
- const category = document.querySelector("dialog select[name='category']").value;
-//  console.log(totalQuestions[0].value, difficulty[0].value, category);
+function fetchQuestionsUsingCard() {
+  const totalQuestions = document.querySelectorAll("dialog select[name='total-questions']");
+  const difficulty = document.querySelectorAll("dialog select[name='difficulty']");
+  const category = document.querySelector("dialog select[name='category']").value;
 
- if(totalQuestions[0].value && difficulty[0].value){
-  fetchQuestions(totalQuestions[0].value, difficulty[0].value);
- }else{
-  fetchQuestionsUsingCategory(totalQuestions, difficulty, category);
- }
+  if (totalQuestions[0].value && difficulty[0].value) {
+    fetchQuestions(totalQuestions[0].value, difficulty[0].value);
+  } else {
+    fetchQuestionsUsingCategory(totalQuestions, difficulty, category);
+  }
 }
 
-const dialogs = document.querySelectorAll("dialog form");
-
-dialogs.forEach(dialog => {
-  dialog.addEventListener("submit", (e) => {
-  console.log("submit");
-    e.preventDefault();
-    fetchQuestionsUsingCard();
-    e.target.closest("dialog").classList.add("loading-cursor");
-    setTimeout(() => {
-      e.target.closest("dialog").close();
-    }, 2000);
-  });
-});
-
-
+// UI Feedback Functions
 function displayFeedbackColor(messaageType) {
   const fact = document.querySelector(".fact");
   if (messaageType === "success") {
@@ -130,28 +142,25 @@ function displayFeedbackColor(messaageType) {
     fact.classList.add("error");
   }
 }
+
 function showFeedback(title, message) {
   const feedbackDiv = document.querySelector(".feedback");
   feedbackDiv.innerHTML = `<p>${title} :<span class="fact">${message}</span></p>`;
   feedbackDiv.classList.add("feedback-text");
 }
 
-function shuffleAnswers(answers) {
-  return answers.sort(() => Math.random() - 0.5);
+function resetFeedback() {
+  const feedbackDiv = document.querySelector(".feedback");
+  feedbackDiv.innerHTML = "";
 }
 
-function processQuestions(questions) {
-  questions = questions.map((question) => {
-    const answers = [...question.incorrect_answers, question.correct_answer];
-    const shuffledAnswers = shuffleAnswers(answers);
-    return {
-      question: question.question,
-      answers: shuffledAnswers,
-      correctAnswer: question.correct_answer,
-      category: question.category,
-    };
-  });
-  return questions;
+// Quiz Control Functions
+function checkQuizCompletion() {
+  if (quizState.currentQuestionIndex >= quizState.questions.length) {
+    console.log("Quiz completed");
+    return true;
+  }
+  return false;
 }
 
 function handleAnswerClick(e) {
@@ -199,20 +208,6 @@ function handleAnswerClick(e) {
   }
 }
 
-function breakText(textString){
-
-    let splittedText = textString.split(" ");
-
-    let halfValue = Math.floor(splittedText.length / 2);
-
-    let clutter = "";
-
-    splittedText.forEach((word,idx) => {
-            clutter += `<span class="word">${word}</span> `;   
-    })
-    return clutter;
-}
-
 function renderQuestion() {
   const question = quizState.questions[quizState.currentQuestionIndex];
   const quizElement = document.getElementById("quiz");
@@ -244,21 +239,23 @@ function renderQuestion() {
   }
 }
 
-function resetFeedback() {
-  const feedbackDiv = document.querySelector(".feedback");
-  feedbackDiv.innerHTML = "";
-}
-
-function checkQuizCompletion() {
-  if (quizState.currentQuestionIndex >= quizState.questions.length) {
-    console.log("Quiz completed");
-    return true;
-  }
-  return false;
-}
+// Event Listeners
+const dialogs = document.querySelectorAll("dialog form");
+dialogs.forEach(dialog => {
+  dialog.addEventListener("submit", (e) => {
+    console.log("submit");
+    e.preventDefault();
+    fetchQuestionsUsingCard();
+    e.target.closest("dialog").classList.add("loading-cursor");
+    setTimeout(() => {
+      e.target.closest("dialog").close();
+    }, 2000);
+  });
+});
 
 const skipButton = document.querySelector(".skip-button");
 const nextButton = document.querySelector(".next-button");
+
 skipButton.addEventListener("click", () => {
   if (!checkQuizCompletion()) {
     quizState.skippedQuestions.push(quizState.currentQuestionIndex);
@@ -288,8 +285,6 @@ nextButton.addEventListener("click", () => {
 });
 
 const openDialogButtons = document.querySelectorAll(".quiz-option-card .card-button");
-
-
 openDialogButtons.forEach(button => {
   console.log(button.dataset.cardType);  
   button.addEventListener("click", () => {
