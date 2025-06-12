@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="./styles/style.css">
     <link rel="stylesheet" href="./styles/utility-classes.css">
+    <link rel="stylesheet" href="./styles/dialog.css">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/locomotive-scroll@3.5.4/dist/locomotive-scroll.css">
     <link
     href="https://cdn.jsdelivr.net/npm/remixicon@4.5.0/fonts/remixicon.css"
@@ -13,210 +14,311 @@
     <title>ZapQuiz</title>
 </head>
 <body>
-    <header>
-        <nav>
-            <div class="logo-part">
-                <div class="logo">
-                    <h1><span>Z</span>apQuiz</h1>
-                  </div>
-                  <i class="ri-menu-3-fill" hidden></i>
-              </div>    
-              <div class="menu">
-                <i class="ri-close-circle-fill" hidden></i>
-                  <ul>
-                      <li><a href="#">Home</a></li>
-                      <li><a href="#">Categories</a></li>
-                      <li><a href="#">How it works</a></li>
-                      <li><a href="#">Contact</a></li>
-                  </ul>
-                  <div class="login-signup">
-                      <button class="login-signup-button">Login/Signup</button>
-                      <button class="get-started-button">Get Started</button> 
-                  </div>
-              </div>
-            
-        </nav>
-    </header>
-    <main data-scroll-container>
-       <section class="container">
-        <div id="hero-section">
-            <canvas></canvas>
-            <div class="hero-section-content">
-                <h1 class="quote">Your Knowledge to Earn</h1>
-                <p class="description">
-                    Take quizzes, earn badges, and climb the leaderboard. Start your journey now!
-                </p>
-                <button class="take-now-button button">Take Now</button>
+    <div class="loading-screen-content">
+        <div class="loading-screen-content-text">
+            <h1><span>Z</span>apQuiz</h1>
+            <div class="loading">
+              <div class="loader-container">
+                <div class="progress-bar">
+                    <div class="progress" id="progress"></div>
+                </div>
+            </div>
             </div>
         </div>
-       </section>
-
-        <section id="how-it-works" class="how-it-works">
-            <h2 class="section-heading">How It Works</h2>
-            <div class="step">
-              <h3>1. Choose Your Category</h3>
-              <p>Select a category that interests you. We have something for everyone – from general knowledge to fun trivia!</p>
-            </div>
-            <div class="step">
-              <h3>2. Answer Questions</h3>
-              <p>Each category has 10-20 multiple-choice questions. Take your time or skip a question if you're unsure.</p>
-            </div>
-            <div class="step">
-              <h3>3. Get Instant Feedback</h3>
-              <p>After answering, you'll know right away if you got it right or wrong, along with a fun fact or explanation.</p>
-            </div>
-            <div class="step">
-              <h3>4. Score and Achievements</h3>
-              <p>Earn points for each correct answer and unlock badges and achievements as you progress.</p>
-            </div>
-            <div class="step">
-              <h3>5. Track Your Progress</h3>
-              <p>Use the progress bar to see how far you’ve come in the quiz.</p>
-            </div>
-            <div class="step">
-              <h3>6. Share and Challenge</h3>
-              <p>Share your scores with friends (optional) and challenge yourself to beat your previous scores!</p>
-            </div>
-          </section>
-
-          <section id="quiz-option" class="quiz-option">
-            <h2 class="section-heading">Quiz Options</h2>
-            <div class="quiz-option-content">
-                <div class="quiz-option-card">
-                        <i class="ri-calendar-todo-line"></i>
-                        <h3 class="card-title">Daily Quiz</h3>
-                        <p class="subtext">A new quiz every day to test your skills.</p>
-                        <button class="button card-button">Start</button>
-                    </div>
-
-                <div class="quiz-option-card">
-                    <i class="ri-shapes-line"></i>
-                        <h3 class="card-title">Category Quiz</h3>
-                        <p class="subtext">Leaderboard.Choose a topic and challenge 
-                            yourself.</p>
-                        <button class="button card-button">Start</button>
-                    </div>
-
-                <div class="quiz-option-card">
-                    
-                    <i class="ri-building-2-fill"></i>
-                        <h3 class="card-title">Leaderboard.</h3>
-                        <p class="subtext">See top performers and your 
-                            rank.</p>
-                        <button class="button card-button">Start</button>
-                    </div>
-
-                <div class="quiz-option-card">
-                    
-                    <i class="ri-trophy-line"></i>
-                        <h3 class="card-title">Achievements</h3>
-                        <p class="subtext">Track your badges and progress.</p>
-                        <button class="button card-button">Start</button>
-                    </div>
-            </div>
-          </section>
-
-          <section class="quiz-section" id="quiz-section">
-            <h2 class="section-heading">Quiz</h2>
-            <div class="quiz-section-container">
-                <div class="quiz-section-header">
-                    <h4 class="correct-answers"><span class="correct-answers-count">0</span>/<span class="total-questions"></span></h4>
-                    <h4 class="quiz-number"><span class="question-number-count">0</span>/<span class="total-questions"></span></h4>
-                    <h4 class="quiz-category"><span class="quiz-category-name">Category</span></h4>
-                    <h4 class="wrong-answers"><span class="wrong-answers-count">0</span>/<span class="total-questions"></span></h4>
+    </div>
+    
+    <header>
+      <nav>
+          <div class="logo-part">
+              <div class="logo">
+                  <h1><span>Z</span>apQuiz</h1>
                 </div>
-                <div class="quiz-section-content">
-                    <div class="quiz-deatil">
-                        <h3 id="quiz" class="quiz">Lorem ipsum dolor sit amet consectetur adipisicing elit. Quisquam, quos.</h3>
-                        <p class="quiz-deatil">Choose the correct answer below.</p>
-                    </div>
-                    <div class="quiz-answer">
-                        <button class="quiz-option-button button" data-option>Option 1</button>
-                        <button class="quiz-option-button button" data-option>Option 2</button>
-                        <button class="quiz-option-button button" data-option>Option 3</button>
-                        <button class="quiz-option-button button" data-option>Option 4</button>
-                    </div>
-                    <div class="feedback-buttons">
-                      <div class="feedback">
-                          <!-- <p class="feedback-text">Correct answer:<span class="fact">Fact</span></p> -->
-                      </div>
-                      <div class="skip-next-button">
-                        <button class="skip-button button">Skip</button>
-                        <button class="next-button button">Next</button>
-                    </div>
-                    </div>
-                </div>
-            </div>
-            
-          </section>
-
-          <section id="result" class="result">
-            <h2 class="section-heading">Result</h2>
-            <div class="result-content">
-                <div class="result-card">
-                    <i class="ri-checkbox-circle-line"></i>
-                    <h3 class="card-title">Correct Answers</h3>
-                    <p id="total-correct-answers" class="subtext">8</p>
-                </div>
-                <div class="result-card">
-                    <i class="ri-close-circle-line"></i>
-                    <h3 class="card-title">Incorrect Answers</h3>
-                    <p id="total-correct-answers" class="subtext">8</p>
-                </div>
-                <div class="result-card">
-                    <i class="ri-subtract-line"></i>
-                    <h3 class="card-title">Skipped</h3>
-                    <p id="total-correct-answers" class="subtext">8</p>
-                </div>
-                <div class="result-card">
-                    <i class="ri-trophy-line"></i>
-                    <h3 class="card-title">Badges Unlocked</h3>
-                    <p id="total-correct-answers" class="subtext">Quiz Streak, Fast Thinker</p>
-                </div>
-
-            </div>
-            <div class="achievement-feedback">
-                <h3 class="achievement-feedback-text">Great effort! Keep going to unlock more achievements.</h3>
-            </div>
-          </section>
-
-          <section class="utility-buttons">
-            <button class="button retake-button">Retake Quiz</button>
-            <button class="button share-button">Share</button>
-          </section>
-          <section id="error-message" class="error-message hidden">
-            <p class="error-message-text">Error Message</p>
-          </section>
-        </main>
-
-        <footer>
-            <h2 class="section-heading">Stay Connected</h2>
-            <div class="footer-content">
-              <div class="about">
-                <h3>About Us</h3>
-                <p>Welcome to ZapQuiz, where learning meets fun! Explore diverse categories and challenge yourself with engaging quizzes.</p>
-              </div>
-              <div class="social-links">
-                <h3>Follow Us</h3>
+                <i class="ri-menu-3-fill" hidden></i>
+            </div>    
+            <div class="menu">
+              <i class="ri-close-circle-fill" hidden></i>
                 <ul>
-                  <li><a href="#" aria-label="Facebook">Facebook</a></li>
-                  <li><a href="#" aria-label="Twitter">Twitter</a></li>
-                  <li><a href="#" aria-label="Instagram">Instagram</a></li>
+                    <li><a href="#">Home</a></li>
+                    <li><a href="#">Categories</a></li>
+                    <li><a href="#">How it works</a></li>
+                    <li><a href="#">Contact</a></li>
                 </ul>
-              </div>
-              <div class="newsletter">
-                <h3>Subscribe</h3>
-                <form>
-                  <label for="email">Get updates on new quizzes:</label>
-                  <input type="email" id="email" placeholder="Enter your email" />
-                  <button type="submit">Subscribe</button>
-                </form>
-              </div>
+                <div class="login-signup">
+                    <button class="login-signup-button">Login/Signup</button>
+                    <button class="get-started-button">Get Started</button> 
+                </div>
             </div>
-            <div class="footer-bottom">
-              <p>&copy; 2025 ZapQuiz. All Rights Reserved.</p>
+          
+      </nav>
+  </header>
+  <main data-scroll-container>
+     <section class="container">
+      <div id="hero-section">
+          <canvas></canvas>
+          <div class="hero-section-content">
+              <h1 class="quote">Your Knowledge to Earn</h1>
+              <p class="description">
+                  Take quizzes, earn badges, and climb the leaderboard. Start your journey now!
+              </p>
+              <button class="take-now-button button">Take Now</button>
+          </div>
+      </div>
+     </section>
+
+      <section id="how-it-works" class="how-it-works">
+          <h2 class="section-heading">How It Works</h2>
+          <div class="step">
+            <h3>1. Choose Your Category</h3>
+            <p>Select a category that interests you. We have something for everyone – from general knowledge to fun trivia!</p>
+          </div>
+          <div class="step">
+            <h3>2. Answer Questions</h3>
+            <p>Each category has 10-20 multiple-choice questions. Take your time or skip a question if you're unsure.</p>
+          </div>
+          <div class="step">
+            <h3>3. Get Instant Feedback</h3>
+            <p>After answering, you'll know right away if you got it right or wrong, along with a fun fact or explanation.</p>
+          </div>
+          <div class="step">
+            <h3>4. Score and Achievements</h3>
+            <p>Earn points for each correct answer and unlock badges and achievements as you progress.</p>
+          </div>
+          <div class="step">
+            <h3>5. Track Your Progress</h3>
+            <p>Use the progress bar to see how far you’ve come in the quiz.</p>
+          </div>
+          <div class="step">
+            <h3>6. Share and Challenge</h3>
+            <p>Share your scores with friends (optional) and challenge yourself to beat your previous scores!</p>
+          </div>
+        </section>
+
+        <section id="quiz-option" class="quiz-option">
+          <h2 class="section-heading">Quiz Options</h2>
+          <div class="quiz-option-content">
+              <div class="quiz-option-card">
+                      <i class="ri-calendar-todo-line"></i>
+                      <h3 class="card-title">Daily Quiz</h3>
+                      <p class="subtext">A new quiz every day to test your skills.</p>
+                      <button class="button card-button" data-card-type="daily">Start</button>
+                  </div>
+
+              <div class="quiz-option-card">
+                  <i class="ri-shapes-line"></i>
+                      <h3 class="card-title">Category Quiz</h3>
+                      <p class="subtext">Leaderboard.Choose a topic and challenge 
+                          yourself.</p>
+                      <button class="button card-button" data-card-type="category">Start</button>
+                  </div>
+
+              <div class="quiz-option-card">
+                  
+                  <i class="ri-building-2-fill"></i>
+                      <h3 class="card-title">Leaderboard.</h3>
+                      <p class="subtext">See top performers and your 
+                          rank.</p>
+                      <button class="button card-button" data-card-type="leaderboard">Check</button>
+                  </div>
+
+              <div class="quiz-option-card">
+                  
+                  <i class="ri-trophy-line"></i>
+                      <h3 class="card-title">Achievements</h3>
+                      <p class="subtext">Track your badges and progress.</p>
+                      <button class="button card-button" data-card-type="achievements">Check</button>
+                  </div>
+          </div>
+        </section>
+
+        <section class="quiz-section" id="quiz-section">
+          <h2 class="section-heading">Quiz</h2>
+          <div class="quiz-section-container">
+              <div class="quiz-section-header">
+                  <h4 class="correct-answers"><span class="correct-answers-count">0</span>/<span class="total-questions"></span></h4>
+                  <h4 class="quiz-number"><span class="question-number-count">0</span>/<span class="total-questions"></span></h4>
+                  <h4 class="quiz-category"><span class="quiz-category-name">Category</span></h4>
+                  <h4 class="wrong-answers"><span class="wrong-answers-count">0</span>/<span class="total-questions"></span></h4>
+              </div>
+              <div class="quiz-section-content">
+                  <div class="quiz-deatil">
+                      <h3 id="quiz" class="quiz">Lorem ipsum dolor sit amet consectetur adipisicing elit. Quisquam, quos.</h3>
+                      <p class="quiz-deatil">Choose the correct answer below.</p>
+                  </div>
+                  <div class="quiz-answer">
+                      <button class="quiz-option-button button" data-option>Option 1</button>
+                      <button class="quiz-option-button button" data-option>Option 2</button>
+                      <button class="quiz-option-button button" data-option>Option 3</button>
+                      <button class="quiz-option-button button" data-option>Option 4</button>
+                  </div>
+                  <div class="feedback-buttons">
+                    <div class="feedback">
+                        <!-- <p class="feedback-text">Correct answer:<span class="fact">Fact</span></p> -->
+                    </div>
+                    <div class="skip-next-button">
+                      <button class="skip-button button">Skip</button>
+                      <button class="next-button button">Next</button>
+                  </div>
+                  </div>
+              </div>
+          </div>
+          
+        </section>
+
+        <section id="result" class="result">
+          <h2 class="section-heading">Result</h2>
+          <div class="result-content">
+              <div class="result-card">
+                  <i class="ri-checkbox-circle-line"></i>
+                  <h3 class="card-title">Correct Answers</h3>
+                  <p id="total-correct-answers" class="subtext">8</p>
+              </div>
+              <div class="result-card">
+                  <i class="ri-close-circle-line"></i>
+                  <h3 class="card-title">Incorrect Answers</h3>
+                  <p id="total-correct-answers" class="subtext">8</p>
+              </div>
+              <div class="result-card">
+                  <i class="ri-subtract-line"></i>
+                  <h3 class="card-title">Skipped</h3>
+                  <p id="total-correct-answers" class="subtext">8</p>
+              </div>
+              <div class="result-card">
+                  <i class="ri-trophy-line"></i>
+                  <h3 class="card-title">Badges Unlocked</h3>
+                  <p id="total-correct-answers" class="subtext">Quiz Streak, Fast Thinker</p>
+              </div>
+
+          </div>
+          <div class="achievement-feedback">
+              <h3 class="achievement-feedback-text">Great effort! Keep going to unlock more achievements.</h3>
+          </div>
+        </section>
+
+        <section class="utility-buttons">
+          <button class="button retake-button">Retake Quiz</button>
+          <button class="button share-button">Share</button>
+        </section>
+        <section id="error-message" class="error-message hidden">
+          <p class="error-message-text">Error Message</p>
+        </section>
+      </main>
+
+      <dialog class="daily-quiz-dialog" data-dialog-type="daily" hidden>
+         <div class="dialog-content">
+          <h2>Daily Quiz</h2>
+          <form id="quiz-setup-form">
+            <label for="total-questions">Total Questions:</label>
+            <select id="total-questions" name="total-questions">
+              <option value="10" selected>10</option>
+              <option value="15">15</option>
+              <option value="20">20</option>
+            </select>
+            <label for="difficulty">Difficulty:</label>
+            <select id="difficulty" name="difficulty">
+              <option value="easy" selected>Easy</option>
+              <option value="medium">Medium</option>
+              <option value="hard">Hard</option>
+            </select>
+            <button type="button" class="close-button">Close</button>
+            <button type="submit" class="submit-button">Start Quiz</button>
+          </form>
+         </div>
+      </dialog> 
+
+      <dialog class="category-section" data-dialog-type="category">
+        <div class="dialog-content">
+          <h2>Select Category</h2>
+          <div class="categories">
+            <label for="category">Category:</label>
+            <select id="category" name="category">
+              <option value="General Knowledge">General Knowledge</option>
+              <option value="Books">Books</option>
+              <option value="Film">Film</option>
+              <option value="Music">Music</option>
+              <option value="Musicals & Theatres">Musicals & Theatres</option>
+              <option value="Television">Television</option>
+              <option value="Video Games">Video Games</option>
+              <option value="Board Games">Board Games</option>
+              <option value="Science & Nature">Science & Nature</option>
+              <option value="Computers">Computers</option>
+              <option value="Mathematics">Mathematics</option>
+              <option value="Mythology">Mythology</option>
+              <option value="Sports">Sports</option>
+              <option value="Geography">Geography</option>
+              <option value="History">History</option>
+              <option value="Politics">Politics</option>
+              <option value="Art">Art</option>
+              <option value="Celebrities">Celebrities</option>
+              <option value="Animals">Animals</option>
+              <option value="Vehicles">Vehicles</option>
+              <option value="Comics">Comics</option>
+              <option value="Gadgets">Gadgets</option>
+              <option value="Anime & Manga">Anime & Manga</option>
+              <option value="Cartoon">Cartoon</option>
+            </select>
+        </div>
+        <form id="quiz-setup-form">
+          <label for="total-questions">Total Questions:</label>
+          <select id="total-questions" name="total-questions">
+            <option value="5">5</option>
+            <option value="10" selected>10</option>
+            <option value="15">15</option>
+            <option value="20">20</option>
+          </select>
+          <label for="difficulty">Difficulty Level:</label>
+          <select id="difficulty" name="difficulty">
+            <option value="easy" selected>Easy</option>
+            <option value="medium">Medium</option>
+            <option value="hard">Hard</option>
+          </select>
+            <button type="button" class="close-button">Close</button>
+            <button type="submit" class="submit-button">Start Quiz</button>
+          </form>
+        </div>
+      </dialog>
+      
+      <dialog class="leaderboard-section" data-dialog-type="leaderboard">
+        <div class="dialog-content">
+          <h2>Leaderboard</h2>
+          <div class="coming-soon-content">
+            <p>Coming Soon!</p>
+            <p>We're working on bringing you an exciting leaderboard feature where you can compete with other players and track your progress.</p>
+          </div>
+          <form>
+            <button type="button" class="close-button">Close</button>
+          </form>
+        </div>
+      </dialog>
+
+      <footer>
+          <h2 class="section-heading">Stay Connected</h2>
+          <div class="footer-content">
+            <div class="about">
+              <h3>About Us</h3>
+              <p>Welcome to ZapQuiz, where learning meets fun! Explore diverse categories and challenge yourself with engaging quizzes.</p>
             </div>
-          </footer>
+            <div class="social-links">
+              <h3>Follow Us</h3>
+              <ul>
+                <li><a href="#" aria-label="Facebook">Facebook</a></li>
+                <li><a href="#" aria-label="Twitter">Twitter</a></li>
+                <li><a href="#" aria-label="Instagram">Instagram</a></li>
+              </ul>
+            </div>
+            <div class="newsletter">
+              <h3>Subscribe</h3>
+              <form>
+                <label for="email">Get updates on new quizzes:</label>
+                <input type="email" id="email" placeholder="Enter your email" />
+                <button type="submit">Subscribe</button>
+              </form>
+            </div>
+          </div>
+          <div class="footer-bottom">
+            <p>&copy; 2025 ZapQuiz. All Rights Reserved.</p>
+          </div>
+        </footer>
+       
 
       
     <script src="https://cdn.jsdelivr.net/npm/locomotive-scroll@3.5.4/dist/locomotive-scroll.min.js"></script>
