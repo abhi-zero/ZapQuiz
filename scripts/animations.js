@@ -1,3 +1,5 @@
+import { quizState } from "./quizApp.js";
+
 // Initialize Locomotive Scroll with GSAP ScrollTrigger integration
 function loco() {
     // Register ScrollTrigger plugin with GSAP
@@ -49,6 +51,39 @@ const frame = {
 // Track loaded images and store image objects
 let imageLoaded = 0;
 const images = [];
+
+
+function loadingScreenAnimation(){
+    document.addEventListener("DOMContentLoaded", () => {
+        const progressElement = document.getElementById("progress");
+    
+        // Simulate backend loading progress
+        let progress = 0;
+    
+        const interval = setInterval(() => {
+            // Simulate progress update from backend
+            progress += 10;
+            if (progress > 100) {
+                progress = 100;
+                clearInterval(interval);
+            }
+            // Update progress bar width
+            progressElement.style.width = progress + "%";
+            if(imageLoaded === frame.maxIndex && quizState.questions.length > 0){
+                document.querySelector(".loading-screen-content").style.display = "none";
+            }
+        }, 500);
+    });
+}
+
+    loadingScreenAnimation();
+   
+
+
+
+
+
+
 
 // Preload all animation frames
 function preLoadframe() {
@@ -175,7 +210,6 @@ function howItWorksAnimation(){
             scroller: "main",
             start: "top 90%",
             end: "top 45%",
-            markers: true,
         },
         x: -500,
         stagger: 1,
@@ -187,7 +221,6 @@ function howItWorksAnimation(){
             scroller: "main",
             start: "top 70%",
             end: "top 45%",
-            markers: true,
         },
         y: 100,
         opacity: 0,
@@ -254,22 +287,13 @@ function resultSectionAnimation(){
 function mobileMenuAnimation(){
    const menuButton = document.querySelector(".logo-part i");
    const closeButton = document.querySelector(".menu i");
-
- 
-        const tl = gsap.timeline();
-
+    const tl = gsap.timeline();
 
    tl.to(".menu", {
     left: "0%",
     ease: "power2.inOut",
     duration: 1
-   },"one")
-   tl.to("header",{
-    height: "100vh",
-    duration: 1,
-    ease: "power2.inOut",
-   },"one")
-
+   })
    tl.from(".menu ul li a", {
     x: 100,
     opacity: 0,
@@ -277,15 +301,8 @@ function mobileMenuAnimation(){
     duration: .3,
    })
    tl.from(".login-signup", {
-    y: 100,
+    y: -50,
     opacity: 0,
-    stagger: .2,
-    duration: .3,
-   })
-   tl.from(".get-started-button", {
-    y: 100,
-    opacity: 0,
-    stagger: .2,
     duration: .3,
    })
    tl.pause();
@@ -303,18 +320,11 @@ if(window.innerWidth < 850){
 
 
 export function animateText(){
-
-    gsap.from(".first-word",{
+    gsap.from(".word",{
        y: 100,
        opacity: 0,
        stagger: .2,
        duration: .5,
-    })
-    gsap.from(".last-word",{
-        y: 100,
-        opacity: 0,
-        stagger: -.2,
-        duration: .5,
     })
 }
 
