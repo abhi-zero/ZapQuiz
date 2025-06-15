@@ -1,4 +1,23 @@
-import { animateText } from "./animations.js";
+import { animateText,scrollToSection } from "./animations.js";
+
+// DOM Elements
+const skipButton = document.querySelector(".skip-button");
+const nextButton = document.querySelector(".next-button");
+const toQuizSection = document.getElementById("toQuizSection");
+const sectionQuizOptions = document.querySelector(".quiz-option");
+const openDialogButtons = document.querySelectorAll(".quiz-option-card .card-button");
+const dialogCloseButtons = document.querySelectorAll("dialog .close-button");
+const resetButton = document.querySelector(".reset-button");
+const retakeButton = document.querySelector(".retake-button");
+const sectionQuiz = document.querySelector(".quiz-section");
+const dialogStartButtons = document.querySelectorAll("dialog form button[type='submit']");
+const navLinks = document.querySelectorAll(".nav-link");
+const linkToCategories = navLinks[1];
+const linkToHowItWorks = navLinks[2];
+const linkToContact = navLinks[3];
+const sectionHowItWorks = document.querySelector(".how-it-works");
+const sectionContact = document.querySelector("#footer");
+const sectionHero = document.getElementById("hero-section");
 
 // State and Configuration
 export const quizState = {
@@ -55,6 +74,17 @@ const stats = JSON.parse(localStorage.getItem("stats")) || {
   },
 };
 
+displayStats();
+
+scrollToSection(linkToCategories,sectionQuizOptions);
+scrollToSection(linkToHowItWorks,sectionHowItWorks);
+scrollToSection(linkToContact,sectionContact);
+scrollToSection(toQuizSection,sectionQuizOptions);
+dialogStartButtons.forEach((button) => {
+  scrollToSection(button,sectionQuiz);
+});
+scrollToSection(retakeButton,sectionQuiz);
+
 // Utility Functions
 function getCategoryId(categoryName) {
   return categories[categoryName];
@@ -63,7 +93,7 @@ function getCategoryId(categoryName) {
 function addCategoryToState(categoryName) {
   quizState.selectedCategory = {
     name: categoryName,
-    id: getCategoryId(categoryName),
+    id: getCategoryId(editCategoryName(categoryName)),
   };
 }
 
@@ -73,7 +103,7 @@ function shuffleAnswers(answers) {
 
 function breakText(textString) {
   let splittedText = textString.split(" ");
-  let halfValue = Math.floor(splittedText.length / 2);
+  // let halfValue = Math.floor(splittedText.length / 2);
   let clutter = "";
   splittedText.forEach((word, idx) => {
     clutter += `<span class="word">${word}</span> `;
@@ -85,7 +115,7 @@ function editCategoryName(categoryName) {
   if (!categoryName.includes(":")) {
     return categoryName;
   }
-  let splittedCategory = categoryName.split(":");
+  let splittedCategory = categoryName.split(": ");
   return splittedCategory[1];
 }
 
@@ -140,7 +170,7 @@ function fetchQuestionsUsingCategory(totalQuestions, difficulty, category) {
   fetchQuestions(totalQuestions, difficulty, categoryId);
 }
 
-function fetchQuestionsUsingCard() {
+function fetchQuestionsUsingCard(target) {
   const totalQuestions = document.querySelectorAll(
     "dialog select[name='total-questions']"
   );
@@ -151,10 +181,15 @@ function fetchQuestionsUsingCard() {
     "dialog select[name='category']"
   ).value;
 
-  if (totalQuestions[0].value && difficulty[0].value) {
+  if (target.classList.contains("daily")) {
     fetchQuestions(totalQuestions[0].value, difficulty[0].value);
   } else {
-    fetchQuestionsUsingCategory(totalQuestions, difficulty, category);
+    resetQuizState();
+    fetchQuestionsUsingCategory(
+      totalQuestions[1].value,
+      difficulty[1].value,
+      category
+    );
   }
 }
 
@@ -183,11 +218,7 @@ function resetFeedback() {
 
 // Quiz Control Functions
 function checkQuizCompletion() {
-  if (quizState.currentQuestionIndex >= quizState.questions.length) {
-    console.log("Quiz completed");
-    return true;
-  }
-  return false;
+  return quizState.currentQuestionIndex >= quizState.questions.length;
 }
 
 function handleAnswerClick(e) {
@@ -197,13 +228,13 @@ function handleAnswerClick(e) {
   const answerButtons = document.querySelectorAll(".quiz-option-button");
   const correctAnswers = document.querySelector(".correct-answers-count");
   const wrongAnswers = document.querySelector(".wrong-answers-count");
+ 
+  
 
-  if (selectedOption === question.correctAnswer) {
+  if (selectedOption == question.correctAnswer) {
     quizState.score++;
     correctAnswers.textContent = quizState.score;
-    console.log("right answer");
     button.classList.add("correct-answer");
-
     showFeedback(
       "Correct Answer",
       `You answered ${selectedOption} question correctly`
@@ -211,10 +242,9 @@ function handleAnswerClick(e) {
     displayFeedbackColor("success");
     setTimeout(resetFeedback, 5000);
   } else {
-    console.log("wrong answer");
     quizState.wrongAnswers++;
     wrongAnswers.textContent = quizState.wrongAnswers;
-    console.log(wrongAnswers.textContent);
+
     button.classList.add("wrong-answer");
     answerButtons.forEach((button) => {
       if (button.dataset.option === question.correctAnswer) {
@@ -242,7 +272,12 @@ function renderQuestion() {
   const categoryName = document.querySelector(".quiz-category-name");
   const questionNumber = document.querySelector(".question-number-count");
   const totalQuestions = document.querySelectorAll(".total-questions");
+  console.log(quizState);
 
+  const correctAnswers = document.querySelector(".correct-answers-count");
+  const wrongAnswers = document.querySelector(".wrong-answers-count");
+  correctAnswers.textContent = quizState.score;
+  wrongAnswers.textContent = quizState.wrongAnswers;
   quizElement.innerHTML = breakText(question.question);
   answerButtons.forEach((button, idx) => {
     button.textContent = question.answers[idx];
@@ -260,23 +295,17 @@ function renderQuestion() {
     total.textContent = quizState.questions.length;
   });
   questionNumber.textContent = quizState.currentQuestionIndex + 1;
-  updateStats();
-  displayStats();
-
-  if (quizState.currentQuestionIndex >= quizState.questions.length) {
-    showFeedback("Quiz Completed", "You have completed all the questions!");
-    displayFeedbackColor("info");
-    return;
-  }
+  nextButton.textContent = "Next";
 }
 
 // Event Listeners
 const dialogs = document.querySelectorAll("dialog form");
+
 dialogs.forEach((dialog) => {
+  
   dialog.addEventListener("submit", (e) => {
-    console.log("submit");
     e.preventDefault();
-    fetchQuestionsUsingCard();
+    fetchQuestionsUsingCard(e.target);
     e.target.closest("dialog").classList.add("loading-cursor");
     setTimeout(() => {
       e.target.closest("dialog").close();
@@ -284,46 +313,67 @@ dialogs.forEach((dialog) => {
   });
 });
 
-const skipButton = document.querySelector(".skip-button");
-const nextButton = document.querySelector(".next-button");
+
 
 skipButton.addEventListener("click", () => {
   if (!checkQuizCompletion()) {
-    quizState.skippedQuestions.push(quizState.currentQuestionIndex);
     quizState.currentQuestionIndex++;
+    
+   if(!checkQuizCompletion()){
+    quizState.skippedQuestions.push(quizState.currentQuestionIndex);
     renderQuestion();
     animateText();
-  } else {
-    showFeedback(
-      "Skipped :",
-      `You skipped ${quizState.skippedQuestions.length} questions`
-    );
-    displayFeedbackColor("info");
-    setTimeout(resetFeedback, 3000);
+    }else{
+      
+      showFeedback(
+        "Skipped",
+        `You have skipped the ${quizState.skippedQuestions.length} questions`
+      );
+      displayFeedbackColor("info");
+      setTimeout(resetFeedback, 3000);
+    }
   }
+  if(quizState.currentQuestionIndex >= quizState.questions.length -1){
+    nextButton.textContent = "Done";
+  }
+  
 });
+
+function isAnswerSelected(){
+  const answerButtons = document.querySelectorAll(".quiz-option-button");
+  return  [...answerButtons].some((button) => button.classList.contains("correct-answer") || button.classList.contains("wrong-answer"));
+}
 
 nextButton.addEventListener("click", () => {
+  if (!isAnswerSelected()) {
+    showFeedback("No Answer Selected", "Please select an answer");
+    displayFeedbackColor("error");
+    setTimeout(resetFeedback, 3000);
+    return; // Prevent further execution
+  }
+
   if (!checkQuizCompletion()) {
     quizState.currentQuestionIndex++;
-    renderQuestion();
-    animateText();
-  } else {
-    showFeedback("Quiz Completed", "You have completed the quiz");
-    displayFeedbackColor("info");
-    setTimeout(resetFeedback, 3000);
+    if (!checkQuizCompletion()) {
+      renderQuestion();
+      animateText();
+    } else {
+      showFeedback("Quiz Completed", "You have completed the quiz");
+      displayFeedbackColor("info");
+      setTimeout(resetFeedback, 3000);
+      updateStats();
+      displayStats();
+    }
+  }
+  if(quizState.currentQuestionIndex >= quizState.questions.length -1){
+    nextButton.textContent = "Done";
   }
 });
 
-const toQuizSection = document.getElementById("toQuizSection");
-toQuizSection.addEventListener("click", () => {
-  const sectionQuizOptions = document.querySelector(".quiz-option");
-  sectionQuizOptions.scrollIntoView({ behavior: "smooth", block: "start" });
-});
 
-const openDialogButtons = document.querySelectorAll(
-  ".quiz-option-card .card-button"
-);
+
+
+
 openDialogButtons.forEach((button) => {
   console.log(button.dataset.cardType);
   button.addEventListener("click", () => {
@@ -334,7 +384,7 @@ openDialogButtons.forEach((button) => {
   });
 });
 
-const dialogCloseButtons = document.querySelectorAll("dialog .close-button");
+
 dialogCloseButtons.forEach((button) => {
   button.addEventListener("click", () => {
     const dialog = button.closest("dialog");
@@ -379,16 +429,18 @@ function resetQuizState() {
   quizState.skippedQuestions = [];
 }
 
-const resetButton = document.querySelector(".reset-button");
+
 resetButton.addEventListener("click", () => {
   resetStats();
   resetQuizState();
 });
 
-const retakeButton = document.querySelector(".retake-button");
+
 retakeButton.addEventListener("click", () => {
-  fetchQuestions(10, "easy", quizState.selectedCategory.id);
   resetQuizState();
+ setTimeout(() => {
+  fetchQuestions(10, "easy", quizState.selectedCategory.id);
+ }, 1000);
 });
 
 fetchQuestions(10, "easy");
