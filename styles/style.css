@@ -796,8 +796,16 @@ i {
         margin-top: 60px;
        }
 
+    #hero-section canvas{
+        display: none;
+    }   
+
     #hero-section{
         width: 100%;
+        background-image: url(../assets/images/frame_0001.jpg);
+        background-position: center;
+        background-repeat: no-repeat;
+        background-size: cover;
     }
 
     #hero-section .hero-section-content h1 {
