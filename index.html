@@ -38,10 +38,10 @@
             <div class="menu">
               <i class="ri-close-circle-fill" hidden></i>
                 <ul>
-                    <li><a href="#">Home</a></li>
-                    <li><a href="#quiz-option">Categories</a></li>
-                    <li><a href="#how-it-works">How it works</a></li>
-                    <li><a href="#footer">Contact</a></li>
+                    <li><a class="nav-link" href="#">Home</a></li>
+                    <li><a class="nav-link" href="#quiz-option">Categories</a></li>
+                    <li><a class="nav-link" href="#how-it-works">How it works</a></li>
+                    <li><a class="nav-link" href="#footer">Contact</a></li>
                 </ul>
                 <div class="login-signup">
                     <button class="login-signup-button">Login/Signup</button>
@@ -85,7 +85,7 @@
           </div>
           <div class="step">
             <h3>5. Track Your Progress</h3>
-            <p>Use the progress bar to see how far you’ve come in the quiz.</p>
+            <p>Use the progress bar to see how far you've come in the quiz.</p>
           </div>
           <div class="step">
             <h3>6. Share and Challenge</h3>
@@ -207,7 +207,7 @@
       <dialog class="daily-quiz-dialog" data-dialog-type="daily" hidden>
          <div class="dialog-content">
           <h2>Daily Quiz</h2>
-          <form id="quiz-setup-form">
+          <form id="quiz-setup-form" class="daily">
             <label for="total-questions">Total Questions:</label>
             <select id="total-questions" name="total-questions">
               <option value="10" selected>10</option>
@@ -261,7 +261,6 @@
         <form id="quiz-setup-form">
           <label for="total-questions">Total Questions:</label>
           <select id="total-questions" name="total-questions">
-            <option value="5">5</option>
             <option value="10" selected>10</option>
             <option value="15">15</option>
             <option value="20">20</option>
@@ -326,6 +325,7 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.13.0/gsap.min.js" integrity="sha512-NcZdtrT77bJr4STcmsGAESr06BYGE8woZdSdEgqnpyqac7sugNO+Tr4bGwGF3MsnEkGKhU2KL2xh6Ec+BqsaHA==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.13.0/ScrollTrigger.min.js" integrity="sha512-P2IDYZfqSwjcSjX0BKeNhwRUH8zRPGlgcWl5n6gBLzdi4Y5/0O4zaXrtO4K9TZK6Hn1BenYpKowuCavNandERg==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
     
+    <script src="./scripts/canvasHandling.js" type="module"></script>
     <script src="./scripts/animations.js" type="module"></script>
     <script src="./scripts/quizApp.js" type="module"></script>
 </body>
