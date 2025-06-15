@@ -91,6 +91,10 @@
     transition: transform 0.3s ease-in-out;
 }
 
+.disabled{
+    cursor:none;
+    pointer-events: none;
+}
 
 .loading-cursor{
     cursor: progress;
