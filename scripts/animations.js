@@ -1,12 +1,17 @@
-import { quizState } from "./quizApp.js";
+
 
 // Initialize Locomotive Scroll with GSAP ScrollTrigger integration
+let locoScroll;
+
+
+
+
 function loco() {
     // Register ScrollTrigger plugin with GSAP
     gsap.registerPlugin(ScrollTrigger);
 
     // Create new Locomotive Scroll instance for smooth scrolling
-    const locoScroll = new LocomotiveScroll({
+    locoScroll = new LocomotiveScroll({
         el: document.querySelector("main"),
         smartphone: {
             smooth: false
@@ -38,137 +43,8 @@ function loco() {
 // Initialize smooth scrolling
 loco();
 
-// Set up canvas and context for image animation
-const canvas = document.querySelector("canvas");
-const context = canvas.getContext("2d");
-
-// Frame tracking object for animation
-const frame = {
-    currentIndex: 0,
-    maxIndex: 250
-};
-
-// Track loaded images and store image objects
-let imageLoaded = 0;
-const images = [];
-
-
-function loadingScreenAnimation(){
-    document.addEventListener("DOMContentLoaded", () => {
-        const progressElement = document.getElementById("progress");
-    
-        // Simulate backend loading progress
-        let progress = 0;
-    
-        const interval = setInterval(() => {
-            // Simulate progress update from backend
-            progress += 10;
-            if (progress > 100) {
-                progress = 100;
-                clearInterval(interval);
-            }
-            // Update progress bar width
-            progressElement.style.width = progress + "%";
-            if(imageLoaded === frame.maxIndex && quizState.questions.length > 0){
-                document.querySelector(".loading-screen-content").style.display = "none";
-            }
-        }, 500);
-    });
-}
-
-    loadingScreenAnimation();
-   
-
-
-
-
-
-
-
-// Preload all animation frames
-function preLoadframe() {
-    for (let i = 1; i <= frame.maxIndex; i++) {
-        const imageUrl = `./assets/images/frame_${i.toString().padStart(4, "0")}.jpg`;
-        const img = new Image();
-        img.src = imageUrl;
-        img.onload = () => {
-            imageLoaded++;
-            if (imageLoaded === frame.maxIndex) {
-                loadImage(frame.currentIndex);
-                startAnimation();
-            }
-        };
-        images.push(img);
-    }
-}
-
-// Load and display a specific frame
-function loadImage(index) {
-    if (index >= 0 && index <= frame.maxIndex) {
-        const img = images[index];
-        const imgWidth = img.width;
-        const imgHeight = img.height;
-        // Set canvas dimensions to window size
-        canvas.height = window.innerHeight;
-        canvas.width = window.innerWidth;
-
-        // Calculate scaling to maintain aspect ratio
-        const scaleX = canvas.width / imgWidth;
-        const scaleY = canvas.height / imgHeight;
-        const scale = Math.max(scaleX, scaleY);
-
-        // Calculate new dimensions and centering offsets
-        const newWidth = imgWidth * scale;
-        const newHeight = imgHeight * scale;
-        const offsetX = (canvas.width - newWidth) / 2;
-        const offsetY = (canvas.height - newHeight) / 2;
-
-        // Clear canvas and draw image
-        context.clearRect(0, 0, canvas.width, canvas.height);
-        context.imageSmoothingEnabled = true;
-        context.imageSmoothingQuality = "high";
-        context.drawImage(img, 0, 0, imgWidth, imgHeight, offsetX, offsetY, newWidth, newHeight);
-        
-        frame.currentIndex = index;
-    }
-}
-
-// Handle window resize
-window.addEventListener("resize", () => {
-    canvas.height = window.innerHeight;
-    canvas.width = window.innerWidth;
-    loadImage(Math.floor(frame.currentIndex));
-});
 
 // Initialize scroll-based animations
-function startAnimation() {
-    // Animate frame sequence based on scroll position
-    gsap.to(frame, {
-        currentIndex: frame.maxIndex,
-        scrollTrigger: {
-            scrub: 0.15,
-            trigger: "#hero-section>canvas",
-            scroller: "main",
-            start: "top top",
-            end: "100% top",
-            pin: true,
-            onLeave : function(){
-                loadImage(frame.maxIndex);
-            }
-        },
-        onUpdate: function() {
-            loadImage(Math.floor(frame.currentIndex));
-        }
-    });
-
-    gsap.to("#how-it-works", {
-        scrollTrigger: {
-            trigger: "#how-it-works",
-            scroller: "main",
-            start: "top top",
-        }
-    })
-}
 
 function heroAnimation(){
     gsap.from("#hero-section .hero-section-content h1" , {
@@ -328,10 +204,16 @@ export function animateText(){
     })
 }
 
+export function scrollToSection(button,section){
+    button.addEventListener("click", () => {
+        setTimeout(() => {
+            section.scrollIntoView({ behavior: "smooth", block: "start" });
+        }, 500);
+    });
+
+}
 
 
-
-preLoadframe();
 heroAnimation();
 howItWorksAnimation();
 quizOptionAnimation();
