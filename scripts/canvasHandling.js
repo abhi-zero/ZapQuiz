@@ -24,7 +24,6 @@ function hideLoadingScreen(){
 }
 
 // Handle canvas resize
-
 function setCanvasSize(){
     if(!heroSection){
         return;
@@ -33,7 +32,6 @@ function setCanvasSize(){
     canvas.height = heroRect.height;
     canvas.width = heroRect.width;
 }
-
 
 // Preload all animation frames
 function preLoadframe() {
@@ -44,12 +42,10 @@ function preLoadframe() {
         img.src = imageUrl;
         img.onload = () => {
             imageLoaded++;
-            console.log(`Loaded image ${imageLoaded} of ${totalImages}`);
-             // Update progress bar width
-             const progress = (imageLoaded / totalImages) * 100;
+            // Update progress bar width
+            const progress = (imageLoaded / totalImages) * 100;
             progressElement.style.width = progress + "%";
             if (imageLoaded === frame.maxIndex) {
-                console.log("All images loaded");
                 setCanvasSize();
                 loadImage(frame.currentIndex);
                 startAnimation();
@@ -66,7 +62,6 @@ function loadImage(index) {
         const img = images[index];
 
         if (!img || !img.complete || img.naturalWidth === 0) {
-            console.warn(`Image at index ${index} is not fully loaded.`);
             return;
         }
        
@@ -94,8 +89,6 @@ function loadImage(index) {
         context.drawImage(img, offsetX, offsetY, newWidth, newHeight);
         
         frame.currentIndex = index;
-    }else {
-        console.warn(`Image index ${index} is out of bounds.`);
     }
 }
 
@@ -109,17 +102,15 @@ const observer = new IntersectionObserver((entries) => {
 
 observer.observe(heroSection);
 
-
 window.addEventListener("resize", ()=> {
    if(imageLoaded === frame.maxIndex){
     setCanvasSize()
     loadImage(frame.currentIndex)
    }
 })
+
 function loadingScreenAnimation(){
-    
     const interval = setInterval(() => {
-       
         // Update progress bar width
         progressElement.style.width = progress + "%";
         if(imageLoaded === frame.maxIndex && quizState.questions.length > 0){
@@ -128,7 +119,6 @@ function loadingScreenAnimation(){
         }
     }, 500);
 }
-
 
 function startAnimation() {
     // Animate frame sequence based on scroll position
@@ -145,7 +135,6 @@ function startAnimation() {
                 loadImage(frame.maxIndex - 1);
             },
             onLeaveBack : function () {
-                console.log("Re-entering hero section. Setting first frame.");
                 loadImage(0); // Load the first frame
             },
         },
@@ -156,8 +145,11 @@ function startAnimation() {
           }
         }
     });
-
 }
 
-loadingScreenAnimation();
-preLoadframe();
+if(window.innerWidth > 850){
+    loadingScreenAnimation();
+    preLoadframe();
+}else{
+    document.querySelector(".loading-screen-content").style.display = "none";
+}

@@ -103,7 +103,6 @@ function shuffleAnswers(answers) {
 
 function breakText(textString) {
   let splittedText = textString.split(" ");
-  // let halfValue = Math.floor(splittedText.length / 2);
   let clutter = "";
   splittedText.forEach((word, idx) => {
     clutter += `<span class="word">${word}</span> `;
@@ -141,7 +140,6 @@ async function fetchQuestions(amount = 10, level = "easy", category = 0) {
   try {
     const response = await fetch(url);
     const data = await response.json();
-    console.log(data);
     if (data.response_code !== 0) {
       if (data.response_code === 1) {
         throw new Error(
@@ -228,8 +226,6 @@ function handleAnswerClick(e) {
   const answerButtons = document.querySelectorAll(".quiz-option-button");
   const correctAnswers = document.querySelector(".correct-answers-count");
   const wrongAnswers = document.querySelector(".wrong-answers-count");
- 
-  
 
   if (selectedOption == question.correctAnswer) {
     quizState.score++;
@@ -272,7 +268,6 @@ function renderQuestion() {
   const categoryName = document.querySelector(".quiz-category-name");
   const questionNumber = document.querySelector(".question-number-count");
   const totalQuestions = document.querySelectorAll(".total-questions");
-  console.log(quizState);
 
   const correctAnswers = document.querySelector(".correct-answers-count");
   const wrongAnswers = document.querySelector(".wrong-answers-count");
