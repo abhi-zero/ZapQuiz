@@ -51,8 +51,10 @@ dd {
 }
 
 /* Set core root defaults */
+html{
+    scroll-behavior: smooth !important;
+}
 html:focus-within {
-    scroll-behavior: smooth;
     overflow-x: hidden;
 }
 
@@ -64,7 +66,7 @@ body {
     line-height: 1.5;
     font-family: 'Inter', sans-serif;
     overflow-x: hidden;
-    scroll-behavior: smooth;
+    /* scroll-behavior: smooth !important; */
     /* background-color: black;  Remove later */
 }
 
@@ -225,6 +227,7 @@ nav {
 }
 
 main {
+    scroll-behavior: smooth;
     width: 100%;
     overflow-x: hidden;
     position: relative;
@@ -243,6 +246,10 @@ main {
     height: 200vh;
     position: relative;
 }
+
+/* #hero-section canvas{
+    z-index: -1;
+} */
 
 #hero-section .hero-section-content {
     position: absolute;
