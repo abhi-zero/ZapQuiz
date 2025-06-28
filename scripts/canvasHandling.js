@@ -1,3 +1,4 @@
+
 import { quizState } from "./quizApp.js";
 
 const heroSection = document.querySelector("#hero-section");
@@ -10,7 +11,7 @@ const context = canvas.getContext("2d");
 // Frame tracking object for animation
 const frame = {
     currentIndex: 0,
-    maxIndex: 250
+    maxIndex: 361
 };
 
 // Track loaded images and store image objects
@@ -18,8 +19,10 @@ let imageLoaded = 0;
 const images = [];
 
 function hideLoadingScreen(){
+    document.querySelector("body").style.overflow = "hidden";
     if(imageLoaded === frame.maxIndex && quizState.questions.length > 0){
         document.querySelector(".loading-screen-content").style.display = "none";
+         document.querySelector("body").style.overflow = "unset";
     }
 }
 
@@ -37,7 +40,7 @@ function setCanvasSize(){
 function preLoadframe() {
     let totalImages = frame.maxIndex;
     for (let i = 1; i <= frame.maxIndex; i++) {
-        const imageUrl = `./assets/images/frame_${i.toString().padStart(4, "0")}.jpg`;
+        const imageUrl = `./assets/images/frame_${i.toString().padStart(4, "0")}.jpeg`;
         const img = new Image();
         img.src = imageUrl;
         img.onload = () => {
@@ -92,15 +95,7 @@ function loadImage(index) {
     }
 }
 
-const observer = new IntersectionObserver((entries) => {
-    entries.forEach((entry) => {
-        if (entry.isIntersecting) {
-            startAnimation();
-        } 
-    });
-});
 
-observer.observe(heroSection);
 
 window.addEventListener("resize", ()=> {
    if(imageLoaded === frame.maxIndex){
@@ -124,22 +119,21 @@ function startAnimation() {
     // Animate frame sequence based on scroll position
     gsap.to(frame, {
         currentIndex: frame.maxIndex,
+        snap : {currentIndex: 1},
+        willChange : 'transform',
         scrollTrigger: {
-            scrub: 0.15,
-            trigger: "#hero-section>canvas",
+             scrub : true,
+            trigger: "#hero-section canvas",
             scroller: "main",
             start: "top top",
             end: "100% top",
             pin: true,
-            onLeave : function(){
-                loadImage(frame.maxIndex - 1);
-            },
-            onLeaveBack : function () {
-                loadImage(0); // Load the first frame
-            },
+            // onLeaveBack : function () {
+            //     loadImage(0); // Load the first frame
+            // },
         },
         onUpdate: function() {
-          const currentFrame =  (Math.floor(frame.currentIndex));
+            const currentFrame = Math.max(0, Math.min(Math.round(frame.currentIndex), images.length - 1));
           if(currentFrame >= 0 && currentFrame < images.length){
            loadImage(currentFrame)
           }
